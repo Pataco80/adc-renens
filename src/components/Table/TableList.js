@@ -15,7 +15,6 @@ export const getData = graphql`
         data {
           rue
           status
-          numerosEffectuer
           nomMembre
           cardSector
         }
