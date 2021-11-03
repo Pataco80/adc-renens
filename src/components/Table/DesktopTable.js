@@ -1,36 +1,50 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import { setColor, setFlex } from '../../theme/helpers'
+import SearchButton from '../SearchButton'
 
-const DesktopTable = ({ listeRues }) => {
+const DesktopTable = ({ listeRues: data = [] }) => {
+  const [listeRues, SetListeRues] = useState(data)
+
+  const setBackToAll = () => {
+    SetListeRues(data)
+  }
+
   return (
-    <Tabel>
-      <Thead>
-        <tt>Rue</tt>
-        <tt>Status</tt>
-        <tt>personne sur site</tt>
-      </Thead>
-      <Tbody>
-        {listeRues.map((road, index) => {
-          const { rue, status, nomMembre, cardSector } = road.data
-          let color
-          if (status === 'Fini') {
-            color = 'green'
-          } else if (status === 'En cours') {
-            color = 'orange'
-          } else {
-            color = 'red'
-          }
-          return (
-            <TableRow style={{ color: `${color}` }} Key={index}>
-              <TableData>{rue}</TableData>
-              <TableData>{status}</TableData>
-              <TableData>{nomMembre}</TableData>
-            </TableRow>
-          )
-        })}
-      </Tbody>
-    </Tabel>
+    <>
+      <SearchButton
+        listeRues={listeRues}
+        SetListeRues={SetListeRues}
+        setBackToAll={setBackToAll}
+      />
+      <Tabel>
+        <Thead>
+          <tt>Rue</tt>
+          <tt>Status</tt>
+          <tt>personne sur site</tt>
+        </Thead>
+        <Tbody>
+          {listeRues.map((road, index) => {
+            const { rue, status, nomMembre, cardSector } = road.data
+            let color
+            if (status === 'Fini') {
+              color = 'green'
+            } else if (status === 'En cours') {
+              color = 'orange'
+            } else {
+              color = 'red'
+            }
+            return (
+              <TableRow style={{ color: `${color}` }} Key={index}>
+                <TableData>{rue}</TableData>
+                <TableData>{status}</TableData>
+                <TableData>{nomMembre}</TableData>
+              </TableRow>
+            )
+          })}
+        </Tbody>
+      </Tabel>
+    </>
   )
 }
 

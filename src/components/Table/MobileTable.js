@@ -1,38 +1,53 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import { setColor, setFlex } from '../../theme/helpers'
-const Table = ({ listeRues }) => {
+import SearchButton from '../SearchButton'
+
+const Table = ({ listeRues: data = [] }) => {
+  const [listeRues, SetListeRues] = useState(data)
+
+  const setBackToAll = () => {
+    SetListeRues(data)
+  }
+
   return (
-    <Tabel>
-      {listeRues.map((road, index) => {
-        const { rue, status, numerosEffectuer, nomMembre, cardSector } =
-          road.data
-        let color
-        if (status === 'Fini') {
-          color = 'green'
-        } else if (status === 'En cours') {
-          color = 'orange'
-        } else {
-          color = 'red'
-        }
-        return (
-          <TabRow Key={index}>
-            <TabData>
-              <Tittle>Rue:</Tittle>
-              <span style={{ color: `${color}` }}>{rue}</span>
-            </TabData>
-            <TabData>
-              <Tittle>Status:</Tittle>
-              <span style={{ color: `${color}` }}>{status}</span>
-            </TabData>
-            <TabData>
-              <Tittle>Membre en charge:</Tittle>
-              <span style={{ color: `${color}` }}>{nomMembre}</span>
-            </TabData>
-          </TabRow>
-        )
-      })}
-    </Tabel>
+    <>
+      <SearchButton
+        listeRues={listeRues}
+        SetListeRues={SetListeRues}
+        setBackToAll={setBackToAll}
+      />
+      <Tabel>
+        {listeRues.map((road, index) => {
+          const { rue, status, numerosEffectuer, nomMembre, cardSector } =
+            road.data
+          let color
+          if (status === 'Fini') {
+            color = 'green'
+          } else if (status === 'En cours') {
+            color = 'orange'
+          } else {
+            color = 'red'
+          }
+          return (
+            <TabRow Key={index}>
+              <TabData>
+                <Tittle>Rue:</Tittle>
+                <span style={{ color: `${color}` }}>{rue}</span>
+              </TabData>
+              <TabData>
+                <Tittle>Status:</Tittle>
+                <span style={{ color: `${color}` }}>{status}</span>
+              </TabData>
+              <TabData>
+                <Tittle>Membre en charge:</Tittle>
+                <span style={{ color: `${color}` }}>{nomMembre}</span>
+              </TabData>
+            </TabRow>
+          )
+        })}
+      </Tabel>
+    </>
   )
 }
 
